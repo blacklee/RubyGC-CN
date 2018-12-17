@@ -21,7 +21,7 @@
 
 第一也是**最重要**的处理内存问题的步骤是用图表来监控内存使用情况。在[Discourse](http://www.discourse.org/)里我们使用了[Graphite](http://graphite.wikidot.com/), [statsd](https://github.com/etsy/statsd/)和[Grafana](http://grafana.org/)这一系列的组合工具来图表化应用程序的各项指标。
 
-前一阵子我为此工作打包了一个 [Docker镜像文件](https://github.com/SamSaffron/graphite_docker)，它和我们目前正在运用的工具非常类似。如果你对此不熟练(???)你可以看看[New Relic](http://newrelic.com/), [Datadog](https://www.datadoghq.com/)或者其他基于云服务的度量提供者。你首先需要追踪的关键指标是Ruby进程的RSS（[Resident set size](https://en.wikipedia.org/wiki/Resident_set_size): 实际使用物理内存(包含共享库占用的内存)）。在Discourse中我们观察Web服务器[Unicorn](http://unicorn.bogomips.org/)和任务队列[Sidekiq](http://sidekiq.org/)的最大RSS数值。
+前一阵子我为此工作打包了一个 [Docker镜像文件](https://github.com/SamSaffron/graphite_docker)，它和我们目前正在运用的工具非常类似。如果不想自己造轮子，你可以看看[New Relic](http://newrelic.com/), [Datadog](https://www.datadoghq.com/)或者其他基于云服务的度量提供者。你首先需要追踪的关键指标是Ruby进程的RSS（[Resident set size](https://en.wikipedia.org/wiki/Resident_set_size): 实际使用物理内存(包含共享库占用的内存)）。在Discourse中我们观察Web服务器[Unicorn](http://unicorn.bogomips.org/)和任务队列[Sidekiq](http://sidekiq.org/)的最大RSS数值。
 
 Discourse被用多个Docker容器部署在多台机器上。我们使用了定制的[Docker容器](https://github.com/discourse/discourse_docker/tree/03b50438d73dbe6076a5a4179e336afaef2b28c2/image/monitor)来监控所有其他Docker容器。这个定制的容器启动后能访问Docker套接字(???)，所以它能够询问Docker关于Docker的信息。它使用了`docker exec`来得到容器内运行的所有进程的所有类别的信息。
 
@@ -527,32 +527,29 @@ PS：另一个值得阅读的优秀资源是Oleg Dashevskii的[How I spent two w
   - [managed/unmanaged] memory leak
   - 保留的英文原文，「托管/非托管」的内存泄漏？是说的「自己代码」和「第三方代码」？还是说「Ruby代码」和「C扩展代码」？拿不准，就保留原文了。
 - 2.
-  - If rolling your own is not your thing
-  - 如果你对此不熟练
-- 3.
   - This container is launched with access to the Docker socket so it can interrogate Docker about Docker.
   - 这个定制的容器启动后能访问Docker套接字，所以它能够询问Docker关于Docker的问题。
-- 4.
+- 3.
   - it is impossible to achieve the same setup (which shares memory among forks) in a one container per process world.
   - 这不可能由单进程单容器的方式达成（在分支间共享内存）。
-- 5.
+- 4.
   - It is much simpler to isolate that a trend started after upgrading EventMachine to version 1.0.5.
   - 在[升级EventMachine](https://github.com/eventmachine/eventmachine/pull/586)后，隔离趋势开始变得更加简单。
-- 6.
+- 5.
   - a nifty trick is breaking out of the trap context with Thread.new
   - 一个巧妙的技巧是用`Thread.new`来突破陷阱环境
-- 7.
+- 6.
   - The GC generation it was allocated in
   - 分配给它的GC世代
-- 8.
+- 7.
   - The first thing I attacked in this particular case was code I wrote, which is a monkey patch to Rails localization.
   - 我在这个特殊情况下注意到的第一件事是我写的代码，这是Rails本地化的猴子补丁。
-- 9.
+- 8.
   - we were sending a hash in from the email message builder that includes ActiveRecord objects
   - 我们从包含ActiveRecord对象的电子邮件消息构建器发送哈希值
-- 10.
+- 9.
   - so we keep it in memory plugging in new variables as we bake posts.
   - 所以当我们编辑帖子时我们在内存总保留了它
-- 11.
+- 10.
   - Running Ruby in an already running process
   - 这一句根据上下文我读出来的是类似「attach to a running Ruby process and debug」，不知道怎么翻译原文
