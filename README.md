@@ -23,7 +23,7 @@
   - Part 4: Lazy JSON Generation and Final Thoughts [原文](http://collectiveidea.com/blog/archives/2015/03/13/optimizing-rails-for-memory-usage-part-4-lazy-json-generation-and-final-thoughts/) [*中文-无*]()
 
 - 2015-03-31, [@samsaffron](http://twitter.com/samsaffron): Debugging memory leaks in Ruby [原文](https://samsaffron.com/archive/2015/03/31/debugging-memory-leaks-in-ruby) [中文](debugging-memory-leaks-in-ruby.md)
-- 2015-05-11, [@schneems](https://twitter.com/schneems): How Ruby Uses Memory [原文](https://www.sitepoint.com/ruby-uses-memory/) [中文](how-ruby-uses-memory.md)
+- 2015-05-11, [@schneems](https://twitter.com/schneems): How Ruby Uses Memory [原文](https://www.sitepoint.com/ruby-uses-memory/) [中文1](https://ruby-china.org/topics/25790) [中文2](how-ruby-uses-memory.md)
 
 ## 其他文章
 
