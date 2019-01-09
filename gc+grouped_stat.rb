@@ -20,3 +20,9 @@ end
 
 # usages
 #   GC.grouped_stat.each {|item| logger.info(item.inspect)}
+# output:
+#   {:gc_count=>{:ma=>10, :mi=>42, :t=>52}}
+#   {:thresholds=>{:malloc_increase_bytes=>[150144, 24554870], :remembered_wb_unprotected_objects=>[3514, 3606], :old_objects=>[263969, 435948], :oldmalloc_increase_bytes=>[150592, 16777216]}}
+#   {:heap_pages=>{:allocated=>929, :sorted_length=>929, :allocatable=>0, :eden=>929, :tomb=>0}}
+#   {:heap_slots=>{:available=>378645, :live=>378033, :free=>612, :final=>0, :marked=>280502}}
+#   {:total=>{:allocated_pages=>929, :freed_pages=>0, :allocated_objects=>1527009, :freed_objects=>1148976}}
